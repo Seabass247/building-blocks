@@ -172,7 +172,7 @@ fn greedy_quads_for_group<V, T>(
             //
             // Start by finding the widest quad in the U direction.
             let mut row_start_stride = p_stride;
-            let quad_width = get_row_width(
+            let mut quad_width = get_row_width(
                 voxels,
                 visited,
                 &quad_material,
@@ -208,12 +208,17 @@ fn greedy_quads_for_group<V, T>(
                 row_start_stride += v_stride;
             }
 
+            quad_width = 1;
+            quad_height = 1;
+
+            let new_quad = UnorientedQuad {
+                minimum: p,
+                width: quad_width,
+                height: quad_height,
+            };
+
             quads.push((
-                UnorientedQuad {
-                    minimum: p,
-                    width: quad_width,
-                    height: quad_height,
-                },
+                new_quad,
                 quad_material,
             ));
 
